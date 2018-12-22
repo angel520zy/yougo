@@ -1,24 +1,23 @@
-function formatNumber (n) {
-  const str = n.toString()
-  return str[1] ? str : `0${str}`
+//封装hxios.get
+let baseUrl="https://autumnfish.cn/wx/"
+let hxios={
+  get(url){
+    //发送请求
+    //promise
+    return new Promise((resolve,reject)=>{
+      wx.request({
+        url:baseUrl+url,
+        method:'GET',
+        dataType:'json',
+        success:res=>{
+          resolve(res);
+        },
+        fail:()=>{
+           reject()
+        },
+        complete:()=>{}
+      });
+    })
+  }
 }
-
-export function formatTime (date) {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-
-  const t1 = [year, month, day].map(formatNumber).join('/')
-  const t2 = [hour, minute, second].map(formatNumber).join(':')
-
-  return `${t1} ${t2}`
-}
-
-export default {
-  formatNumber,
-  formatTime
-}
+export default hxios;
